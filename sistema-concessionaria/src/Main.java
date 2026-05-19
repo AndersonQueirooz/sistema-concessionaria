@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
@@ -5,10 +6,11 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        List<Carro> carros = new java.util.ArrayList<>();
-        List<Pessoa_Fisica> clientesPF = new java.util.ArrayList<>();
-        List<Pessoa_Juridica> clientesPJ = new java.util.ArrayList<>();
-        List<Moto> motos = new java.util.ArrayList<>();
+        List<Carro> carros = new ArrayList<>();
+        List<Pessoa_Fisica> clientesPF = new ArrayList<>();
+        List<Pessoa_Juridica> clientesPJ = new ArrayList<>();
+        List<Moto> motos = new ArrayList<>();
+        List<Venda> vendas = new ArrayList<>();
 
         System.out.println("Bem-vindo ao sistema de concessionária!");
         System.out.println("\nSelecione a opção desejada:");
@@ -27,44 +29,47 @@ public class Main {
 
         switch (opcao) {
             case 1:
-                System.out.println("Qual veiculo deseja cadastrar?");
-                System.out.println("1 - Carro");
-                System.out.println("2 - Moto");
-                int opcaoVeiculo = scanner.nextInt();
-                if (opcaoVeiculo == 1) {
-                    System.out.println("Digite a marca:");
-                    String marca = scanner.next();
+                int opcaoVeiculo;
+                do {
+                    System.out.println("Qual veiculo deseja cadastrar?");
+                    System.out.println("1 - Carro");
+                    System.out.println("2 - Moto");
+                    opcaoVeiculo = scanner.nextInt();
+                    if (opcaoVeiculo == 1) {
+                        System.out.println("Digite o fabricante:");
+                        String fabricante = scanner.next();
 
-                    System.out.println("Digite o modelo:");
-                    String modelo = scanner.next();
+                        System.out.println("Digite o modelo:");
+                        String modelo = scanner.next();
 
-                    System.out.println("Digite a placa:");
-                    String placa = scanner.next();
+                        System.out.println("Digite a placa:");
+                        String placa = scanner.next();
 
-                    System.out.println("Digite o ano:");
-                    int ano = scanner.nextInt();
+                        System.out.println("Digite o ano:");
+                        int ano = scanner.nextInt();
 
-                    carros.add(new Carro(marca, modelo, placa, ano));
-                    System.out.println("Carro cadastrado com sucesso!");
+                        carros.add(new Carro(fabricante, modelo, placa, ano));
+                        System.out.println("Carro cadastrado com sucesso!");
 
-                } else if (opcaoVeiculo == 2) {
-                    System.out.println("Digite a marca:");
-                    String marca = scanner.next();
+                    } else if (opcaoVeiculo == 2) {
+                        System.out.println("Digite o fabricante:");
+                        String fabricante = scanner.next();
 
-                    System.out.println("Digite o modelo:");
-                    String modelo = scanner.next();
+                        System.out.println("Digite o modelo:");
+                        String modelo = scanner.next();
 
-                    System.out.println("Digite a placa:");
-                    String placa = scanner.next();
+                        System.out.println("Digite a placa:");
+                        String placa = scanner.next();
 
-                    System.out.println("Digite o ano:");
-                    int ano = scanner.nextInt();
+                        System.out.println("Digite o ano:");
+                        int ano = scanner.nextInt();
 
-                    motos.add(new Moto(marca, modelo, placa, ano));
-                    System.out.println("Moto cadastrada com sucesso!");
-                } else {
-                    System.out.println("Opção inválida!");
-                }
+                        motos.add(new Moto(fabricante, modelo, placa, ano));
+                        System.out.println("Moto cadastrada com sucesso!");
+                    } else {
+                        System.out.println("Opção inválida!");
+                    }
+                } while (opcaoVeiculo != 1 && opcaoVeiculo != 2);
                 break;
             case 2:
                 int opcaoCliente;
@@ -120,8 +125,8 @@ public class Main {
                         boolean encontrado = false;
                         for (Carro carro : carros) {
                             if (carro.getPlaca().equals(placaEditar)) {
-                                System.out.println("Digite a nova marca:");
-                                carro.setMarca(scanner.next());
+                                System.out.println("Digite o novo fabricante:");
+                                carro.setFabricante(scanner.next());
                                 System.out.println("Digite o novo modelo:");
                                 carro.setModelo(scanner.next());
                                 System.out.println("Digite o novo ano:");
@@ -140,8 +145,8 @@ public class Main {
                         boolean encontrado = false;
                         for (Moto moto : motos) {
                             if (moto.getPlaca().equals(placaEditar)) {
-                                System.out.println("Digite a nova marca:");
-                                moto.setMarca(scanner.next());
+                                System.out.println("Digite o novo fabricante:");
+                                moto.setFabricante(scanner.next());
                                 System.out.println("Digite o novo modelo:");
                                 moto.setModelo(scanner.next());
                                 System.out.println("Digite o novo ano:");
@@ -165,25 +170,68 @@ public class Main {
             case 5:
                 break;
             case 6:
+                int opcaoDeletarCliente;
+                do {
+                    System.out.println("Qual tipo de cliente deseja deletar?");
+                    System.out.println("1 - Pessoa Física");
+                    System.out.println("2 - Pessoa Jurídica");
+                    opcaoDeletarCliente = scanner.nextInt();
+                    if (opcaoDeletarCliente == 1) {
+                        System.out.println("Digite o CPF do cliente que deseja deletar:");
+                        String cpfDeletar = scanner.next();
+                        boolean encontrado = false;
+                        for (Pessoa_Fisica pf : clientesPF) {
+                            if (pf.getCpf().equals(cpfDeletar)) {
+                                clientesPF.remove(pf);
+                                System.out.println("Cliente Pessoa Física deletado com sucesso!");
+                                encontrado = true;
+                                break;
+                            }
+                        }
+                        if (!encontrado)
+                            System.out.println("Cliente não encontrado!");
+
+                    } else if (opcaoDeletarCliente == 2) {
+                        System.out.println("Digite o CNPJ do cliente que deseja deletar:");
+                        String cnpjDeletar = scanner.next();
+                        boolean encontrado = false;
+                        for (Pessoa_Juridica pj : clientesPJ) {
+                            if (pj.getCnpj().equals(cnpjDeletar)) {
+                                clientesPJ.remove(pj);
+                                System.out.println("Cliente Pessoa Jurídica deletado com sucesso!");
+                                encontrado = true;
+                                break;
+                            }
+                        }
+                        if (!encontrado)
+                            System.out.println("Cliente não encontrado!");
+
+                    } else {
+                        System.out.println("Opção inválida! Tente novamente.");
+                    }
+                } while (opcaoDeletarCliente != 1 && opcaoDeletarCliente != 2);
                 break;
             case 7:
-                System.out.println("Qual tipo de veiculo deseja listar?");
-                System.out.println("1 - Carro");
-                System.out.println("2 - Moto");
-                int opcaoListar = scanner.nextInt();
-                if (opcaoListar == 1) {
-                    for (Carro carro : carros) {
-                        System.out.println(carro);
+                int opcaoListar;
+                do {
+                    System.out.println("Qual tipo de veiculo deseja listar?");
+                    System.out.println("1 - Carro");
+                    System.out.println("2 - Moto");
+                    opcaoListar = scanner.nextInt();
+                    if (opcaoListar == 1) {
+                        for (Carro carro : carros) {
+                            System.out.println(carro);
+                        }
+                    } else if (opcaoListar == 2) {
+                        for (Moto moto : motos) {
+                            System.out.println(moto);
+                        }
+                    } else {
+                        System.out.println("Opção inválida!");
                     }
-                } else if (opcaoListar == 2) {
-                    for (Moto moto : motos) {
-                        System.out.println(moto);
-                    }
-                } else {
-                    System.out.println("Opção inválida!");
-                }
-                System.out.println("Digite uma opção válida para listar os veículos.");
-                opcaoListar = scanner.nextInt();
+                    System.out.println("Digite uma opção válida para listar os veículos.");
+                    opcaoListar = scanner.nextInt();
+                } while (opcaoListar != 1 && opcaoListar != 2);
                 break;
             case 8:
                 System.out.println("Qual tipo de cliente deseja listar?");
@@ -201,8 +249,20 @@ public class Main {
                 }
                 break;
             case 9:
+                int opcaoVender;
+                do {
+                    System.out.println("Qual tipo de veiculo deseja vender?");
+                    System.out.println("1 - Carro");
+                    System.out.println("2 - Moto");
+                    opcaoVender = scanner.nextInt();
+
+                } while (opcaoVender != 1 && opcaoVender != 2);
                 break;
             case 10:
+                System.out.println("Historico de vendas:");
+                for (Venda venda : vendas) {
+                    System.out.println(venda);
+                }
                 break;
             case 11:
                 System.out.println("Saindo do sistema...");

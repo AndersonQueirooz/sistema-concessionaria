@@ -1,15 +1,15 @@
 public class Veiculo {
 
-    private String marca;
+    private String fabricante;
     private String modelo;
     private String placa;
     private int ano;
 
-    public String getMarca() {
-        return marca;
+    public String getFabricante() {
+        return fabricante;
     }
-    public void setMarca(String marca) {
-        this.marca = marca;
+    public void setFabricante(String fabricante) {
+        this.fabricante = fabricante;
     }
     public String getModelo() {
         return modelo;
@@ -31,8 +31,8 @@ public class Veiculo {
         this.ano = ano;
     }
     
-    public Veiculo(String marca, String modelo, String placa, int ano) {
-        this.marca = marca;
+    public Veiculo(String fabricante, String modelo, String placa, int ano) {
+        this.fabricante = fabricante;
         this.modelo = modelo;
         this.placa = placa;
         this.ano = ano;
