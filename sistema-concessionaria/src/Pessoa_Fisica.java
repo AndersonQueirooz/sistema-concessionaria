@@ -1,22 +1,21 @@
 public class Pessoa_Fisica extends Cliente {
 
-    public Pessoa_Fisica(String nome, String endereco, String telefone) {
-        super(nome, endereco, telefone);
+    public Pessoa_Fisica(String nome, String cpf, String contato) {
+        super(nome, contato);
+        this.cpf = cpf;
     }
     private String cpf;
-    private String rg;
 
     public String getCpf() {
         return cpf;
     }
+
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
-    public String getRg() {
-        return rg;
+        
+    @Override
+    public String toString() {
+        return "Pessoa_Fisica [nome = " + getNome() + ", cpf = " + cpf + ", contato = " + getContato() + "]";
     }
-    public void setRg(String rg) {
-        this.rg = rg;
-    }
-
 }

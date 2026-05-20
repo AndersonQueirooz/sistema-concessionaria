@@ -4,4 +4,10 @@ public class Carro extends Veiculo {
         super(fabricante, modelo, placa, ano);
     }
 
+    @Override
+    public String toString() {
+        return "Carro [fabricante = " + getFabricante() + ", modelo = " + getModelo() + ", placa = " + getPlaca() + ", ano = " + getAno() + "]";
+    }
+
+    
 }

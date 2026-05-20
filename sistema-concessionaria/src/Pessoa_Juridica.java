@@ -1,22 +1,22 @@
 public class Pessoa_Juridica extends Cliente {
 
-    public Pessoa_Juridica(String nome, String endereco, String telefone) {
-        super(nome, endereco, telefone);
+    public Pessoa_Juridica(String nome, String cnpj, String contato) {
+        super(nome, contato);
+        this.cnpj = cnpj;
     }
+
     private String cnpj;
-    private String inscricao_estadual;
 
     public String getCnpj() {
         return cnpj;
     }
+
     public void setCnpj(String cnpj) {
         this.cnpj = cnpj;
     }
-    public String getInscricao_estadual() {
-        return inscricao_estadual;
-    }
-    public void setInscricao_estadual(String inscricao_estadual) {
-        this.inscricao_estadual = inscricao_estadual;
-    }
 
+    @Override
+    public String toString() {
+        return "Pessoa_Juridica [nome = " + getNome() + ", cnpj = " + cnpj + ", contato = " + getContato() + "]";
+    }
 }
