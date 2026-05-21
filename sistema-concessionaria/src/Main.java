@@ -4,6 +4,22 @@ import java.util.Scanner;
 
 public class Main {
 
+    private static int lerAnoValido(Scanner scanner) {
+        int ano = -1;
+        while (ano == -1) {
+            try {
+                ano = scanner.nextInt();
+                if (ano > 2027) {
+                    throw new AnoException("Ano inválido! O ano não pode ser maior que 2027.");
+                }
+            } catch (AnoException e) {
+                System.out.println(e.getMessage() + " Tente novamente:");
+                ano = -1;
+            }
+        }
+        return ano;
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         List<Carro> carros = new ArrayList<>();
@@ -46,7 +62,7 @@ public class Main {
                             System.out.println("Digite a placa:");
                             String placa = scanner.next();
                             System.out.println("Digite o ano:");
-                            int ano = scanner.nextInt();
+                            int ano = lerAnoValido(scanner);
                             carros.add(new Carro(fabricante, modelo, placa, ano));
                             System.out.println("Carro cadastrado com sucesso!");
                         } else if (opcaoVeiculo == 2) {
@@ -57,7 +73,7 @@ public class Main {
                             System.out.println("Digite a placa:");
                             String placa = scanner.next();
                             System.out.println("Digite o ano:");
-                            int ano = scanner.nextInt();
+                            int ano = lerAnoValido(scanner);
                             motos.add(new Moto(fabricante, modelo, placa, ano));
                             System.out.println("Moto cadastrada com sucesso!");
                         } else {
@@ -115,7 +131,7 @@ public class Main {
                                     System.out.println("Digite o novo modelo:");
                                     carro.setModelo(scanner.next());
                                     System.out.println("Digite o novo ano:");
-                                    carro.setAno(scanner.nextInt());
+                                    carro.setAno(lerAnoValido(scanner));
                                     System.out.println("Carro editado com sucesso!");
                                     encontrado = true;
                                     break;
@@ -134,7 +150,7 @@ public class Main {
                                     System.out.println("Digite o novo modelo:");
                                     moto.setModelo(scanner.next());
                                     System.out.println("Digite o novo ano:");
-                                    moto.setAno(scanner.nextInt());
+                                    moto.setAno(lerAnoValido(scanner));
                                     System.out.println("Moto editada com sucesso!");
                                     encontrado = true;
                                     break;
@@ -194,6 +210,7 @@ public class Main {
                         }
                     } while (opcaoEditarCliente != 1 && opcaoEditarCliente != 2);
                     break;
+
                 case 5:
                     int opcaoDeletarVeiculo;
                     do {
@@ -230,34 +247,28 @@ public class Main {
                         System.out.println("1 - Pessoa Física");
                         System.out.println("2 - Pessoa Jurídica");
                         opcaoDeletarCliente = scanner.nextInt();
-
                         if (opcaoDeletarCliente == 1) {
                             System.out.println("Digite o CPF do cliente que deseja deletar:");
                             String cpfDeletar = scanner.next();
-
                             boolean removido = clientesPF.removeIf(pf -> pf.getCpf().equals(cpfDeletar));
-
                             if (removido)
                                 System.out.println("Cliente Pessoa Física deletado com sucesso!");
                             else
                                 System.out.println("Cliente não encontrado!");
-
                         } else if (opcaoDeletarCliente == 2) {
                             System.out.println("Digite o CNPJ do cliente que deseja deletar:");
                             String cnpjDeletar = scanner.next();
-
                             boolean removido = clientesPJ.removeIf(pj -> pj.getCnpj().equals(cnpjDeletar));
-
                             if (removido)
                                 System.out.println("Cliente Pessoa Jurídica deletado com sucesso!");
                             else
                                 System.out.println("Cliente não encontrado!");
-
                         } else {
                             System.out.println("Opção inválida! Tente novamente.");
                         }
                     } while (opcaoDeletarCliente != 1 && opcaoDeletarCliente != 2);
                     break;
+
                 case 7:
                     int opcaoListar;
                     do {
@@ -391,6 +402,7 @@ public class Main {
                         }
                     } while (opcaoVender != 1 && opcaoVender != 2);
                     break;
+
                 case 10:
                     System.out.println("Historico de vendas:");
                     if (vendas.isEmpty()) {
